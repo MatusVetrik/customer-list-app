@@ -1,12 +1,10 @@
-import React from "react";
-
 import { gql, useQuery } from "urql";
 
 import { Box } from "grommet";
 
-import CustomerCard from "./Card/CustomerCard";
+import CustomerContainer from "./Card/CustomerContainer";
 import Fetching from "../server/Fetching";
-import { Customer } from "../generated/graphql";
+import AppHeader from "./AppHeader";
 
 const query = gql`
   query MyQuery {
@@ -19,11 +17,7 @@ const query = gql`
   }
 `;
 
-interface Props {
-  setSelectedCustomer: React.Dispatch<React.SetStateAction<Customer | null>>;
-}
-
-const CustomersList: React.FC<Props> = ({ setSelectedCustomer }) => {
+const CustomersList = () => {
   const [result] = useQuery({
     query: query,
   });
@@ -34,22 +28,20 @@ const CustomersList: React.FC<Props> = ({ setSelectedCustomer }) => {
   if (error) return <p>Oh no... {error.message}</p>;
 
   return (
-    <Box
-      align="center"
-      justify="center"
-      direction="row"
-      gap="large"
-      pad={{ vertical: "medium", horizontal: "medium" }}
-    >
-      {data.customer.map((customer: any, key: number) => (
-        <CustomerCard
-          key={key}
-          index={key}
-          customer={customer}
-          setSelectedCustomer={setSelectedCustomer}
-        ></CustomerCard>
-      ))}
-    </Box>
+    <>
+      <AppHeader text="Customers" />
+      <Box
+        align="center"
+        justify="center"
+        direction="row"
+        gap="large"
+        pad={{ vertical: "medium", horizontal: "medium" }}
+      >
+        {data.customer.map((customer: any, key: number) => (
+          <CustomerContainer key={key} index={key} customer={customer} />
+        ))}
+      </Box>
+    </>
   );
 };
 

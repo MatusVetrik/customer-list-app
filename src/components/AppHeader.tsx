@@ -1,12 +1,10 @@
-import React from "react";
-
 import { Box, Paragraph, Clock } from "grommet";
 
-interface Props {
+interface AppHeaderProps {
   text: string;
 }
 
-const AppHeader: React.FC<Props> = ({ text }) => {
+const AppHeader = ({ text }: AppHeaderProps) => {
   return (
     <Box
       animation={["fadeIn", "slideDown"]}

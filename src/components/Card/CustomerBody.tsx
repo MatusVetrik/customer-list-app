@@ -1,5 +1,3 @@
-import React from "react";
-
 import { gql, useQuery } from "urql";
 
 import { CardBody, Text, Box } from "grommet";
@@ -7,11 +5,11 @@ import { CardBody, Text, Box } from "grommet";
 import Fetching from "../../server/Fetching";
 import { Customer } from "../../generated/graphql";
 
-interface Props {
+interface CustomerBodyProps {
   customer: Customer;
 }
 
-const CustomerBody: React.FC<Props> = ({ customer }) => {
+const CustomerBody = ({ customer }: CustomerBodyProps) => {
   const query = gql`
     query MyQuery($cusId: uuid!) {
       order(order_by: {}, where: { customer_id: { _eq: $cusId } }) {

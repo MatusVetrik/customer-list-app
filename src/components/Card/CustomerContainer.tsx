@@ -1,5 +1,3 @@
-import React from "react";
-
 import { Card } from "grommet";
 
 import CustomerHeader from "./CustomerHeader";
@@ -7,17 +5,12 @@ import CustomerBody from "./CustomerBody";
 import CustomerFooter from "./CustomerFooter";
 import { Customer } from "../../generated/graphql";
 
-interface Props {
+interface CustomerCardProps {
   index: number;
   customer: Customer;
-  setSelectedCustomer: React.Dispatch<React.SetStateAction<Customer | null>>;
 }
 
-const CustomerCard: React.FC<Props> = ({
-  customer,
-  index,
-  setSelectedCustomer,
-}) => {
+const CustomerCard = ({ customer, index }: CustomerCardProps) => {
   return (
     <Card
       animation={["fadeIn", "slideUp"]}
@@ -29,12 +22,9 @@ const CustomerCard: React.FC<Props> = ({
       flex="shrink"
       hoverIndicator
     >
-      <CustomerHeader index={index} customer={customer}></CustomerHeader>
-      <CustomerBody customer={customer}></CustomerBody>
-      <CustomerFooter
-        customer={customer}
-        setSelectedCustomer={setSelectedCustomer}
-      ></CustomerFooter>
+      <CustomerHeader index={index} customer={customer} />
+      <CustomerBody customer={customer} />
+      <CustomerFooter customer={customer} />
     </Card>
   );
 };

@@ -1,5 +1,3 @@
-import React from "react";
-
 import { CardHeader, Avatar } from "grommet";
 
 import avatar01 from "./assets/avatar01.png";
@@ -7,12 +5,12 @@ import avatar02 from "./assets/avatar02.png";
 import avatar03 from "./assets/avatar03.png";
 import { Customer } from "../../generated/graphql";
 
-interface Props {
+interface CustomerHeaderProps {
   index: number;
   customer: Customer;
 }
 
-const CustomerHeader: React.FC<Props> = ({ customer, index }) => {
+const CustomerHeader = ({ customer, index }: CustomerHeaderProps) => {
   return (
     <CardHeader
       border="bottom"

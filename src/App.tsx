@@ -4,15 +4,15 @@ import { Grommet } from "grommet";
 
 import { Provider } from "urql";
 
-import Structure from "./components/Structure";
+import Structure from "./components/Routes";
 import client from "./server/provider";
 import theme from "./themeGrommet";
 
-const App: React.FC = () => {
+const App = () => {
   return (
     <Provider value={client}>
       <Grommet theme={theme}>
-        <Structure></Structure>
+        <Structure />
       </Grommet>
     </Provider>
   );

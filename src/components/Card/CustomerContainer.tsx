@@ -3,14 +3,18 @@ import { Card } from "grommet";
 import CustomerHeader from "./CustomerHeader";
 import CustomerBody from "./CustomerBody";
 import CustomerFooter from "./CustomerFooter";
-import { Customer } from "../../generated/graphql";
+import { Customer, useDetailQuery } from "../../generated/graphql";
 
 interface CustomerCardProps {
   index: number;
   customer: Customer;
 }
 
-const CustomerCard = ({ customer, index }: CustomerCardProps) => {
+const CustomerContainer = ({ customer, index }: CustomerCardProps) => {
+  const [{ data, fetching, error }] = useDetailQuery();
+
+  if (error) return <p>Oh no... {error.message}</p>;
+
   return (
     <Card
       animation={["fadeIn", "slideUp"]}
@@ -23,10 +27,10 @@ const CustomerCard = ({ customer, index }: CustomerCardProps) => {
       hoverIndicator
     >
       <CustomerHeader index={index} customer={customer} />
-      <CustomerBody customer={customer} />
+      <CustomerBody data={data} customer={customer} fetching={fetching} />
       <CustomerFooter customer={customer} />
     </Card>
   );
 };
 
-export default CustomerCard;
+export default CustomerContainer;

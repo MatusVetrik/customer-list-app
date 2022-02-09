@@ -1,28 +1,12 @@
-import { gql, useQuery } from "urql";
-
 import { Box } from "grommet";
 
 import CustomerContainer from "./Card/CustomerContainer";
-import Fetching from "../server/Fetching";
+import Fetching from "./Fetching";
 import AppHeader from "./AppHeader";
-
-const query = gql`
-  query MyQuery {
-    customer(distinct_on: id) {
-      id
-      birth_date
-      name
-      vip
-    }
-  }
-`;
+import { Customer, useCustomerQuery } from "../generated/graphql";
 
 const CustomersList = () => {
-  const [result] = useQuery({
-    query: query,
-  });
-
-  const { data, fetching, error } = result;
+  const [{ data, fetching, error }] = useCustomerQuery();
 
   if (fetching) return <Fetching height="100vh"></Fetching>;
   if (error) return <p>Oh no... {error.message}</p>;
@@ -37,7 +21,7 @@ const CustomersList = () => {
         gap="large"
         pad={{ vertical: "medium", horizontal: "medium" }}
       >
-        {data.customer.map((customer: any, key: number) => (
+        {data?.customer.map((customer: Customer, key: number) => (
           <CustomerContainer key={key} index={key} customer={customer} />
         ))}
       </Box>

@@ -1,11 +1,11 @@
-import { gql } from '@apollo/client';
-import * as Apollo from '@apollo/client';
+import gql from 'graphql-tag';
+import * as Urql from 'urql';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
-const defaultOptions = {} as const;
+export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string;
@@ -702,21 +702,19 @@ export type Uuid_Comparison_Exp = {
   _nin?: InputMaybe<Array<Scalars['uuid']>>;
 };
 
-export type MyQueryQueryVariables = Exact<{ [key: string]: never; }>;
+export type CustomerQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type MyQueryQuery = { __typename?: 'query_root', customer: Array<{ __typename?: 'customer', id: any, birth_date: any, name: string, vip: boolean }> };
+export type CustomerQuery = { __typename?: 'query_root', customer: Array<{ __typename?: 'customer', id: any, birth_date: any, name: string, vip: boolean }> };
 
-export type MyQuery1QueryVariables = Exact<{
-  cusId: Scalars['uuid'];
-}>;
+export type DetailQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type MyQuery1Query = { __typename?: 'query_root', order: Array<{ __typename?: 'order', id: any, customer_id?: any | null, cost?: number | null, order_date?: any | null, products_amount?: number | null }> };
+export type DetailQuery = { __typename?: 'query_root', order: Array<{ __typename?: 'order', id: any, customer_id?: any | null, cost?: number | null, order_date?: any | null, products_amount?: number | null }>, customer: Array<{ __typename?: 'customer', id: any, name: string, birth_date: any, vip: boolean }> };
 
 
-export const MyQueryDocument = gql`
-    query MyQuery {
+export const CustomerDocument = gql`
+    query customer {
   customer(distinct_on: id) {
     id
     birth_date
@@ -726,68 +724,27 @@ export const MyQueryDocument = gql`
 }
     `;
 
-/**
- * __useMyQueryQuery__
- *
- * To run a query within a React component, call `useMyQueryQuery` and pass it any options that fit your needs.
- * When your component renders, `useMyQueryQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useMyQueryQuery({
- *   variables: {
- *   },
- * });
- */
-export function useMyQueryQuery(baseOptions?: Apollo.QueryHookOptions<MyQueryQuery, MyQueryQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<MyQueryQuery, MyQueryQueryVariables>(MyQueryDocument, options);
-      }
-export function useMyQueryLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<MyQueryQuery, MyQueryQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<MyQueryQuery, MyQueryQueryVariables>(MyQueryDocument, options);
-        }
-export type MyQueryQueryHookResult = ReturnType<typeof useMyQueryQuery>;
-export type MyQueryLazyQueryHookResult = ReturnType<typeof useMyQueryLazyQuery>;
-export type MyQueryQueryResult = Apollo.QueryResult<MyQueryQuery, MyQueryQueryVariables>;
-export const MyQuery1Document = gql`
-    query MyQuery1($cusId: uuid!) {
-  order(order_by: {}, where: {customer_id: {_eq: $cusId}}) {
+export function useCustomerQuery(options?: Omit<Urql.UseQueryArgs<CustomerQueryVariables>, 'query'>) {
+  return Urql.useQuery<CustomerQuery>({ query: CustomerDocument, ...options });
+};
+export const DetailDocument = gql`
+    query detail {
+  order {
     id
     customer_id
     cost
     order_date
     products_amount
   }
+  customer {
+    id
+    name
+    birth_date
+    vip
+  }
 }
     `;
 
-/**
- * __useMyQuery1Query__
- *
- * To run a query within a React component, call `useMyQuery1Query` and pass it any options that fit your needs.
- * When your component renders, `useMyQuery1Query` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useMyQuery1Query({
- *   variables: {
- *      cusId: // value for 'cusId'
- *   },
- * });
- */
-export function useMyQuery1Query(baseOptions: Apollo.QueryHookOptions<MyQuery1Query, MyQuery1QueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<MyQuery1Query, MyQuery1QueryVariables>(MyQuery1Document, options);
-      }
-export function useMyQuery1LazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<MyQuery1Query, MyQuery1QueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<MyQuery1Query, MyQuery1QueryVariables>(MyQuery1Document, options);
-        }
-export type MyQuery1QueryHookResult = ReturnType<typeof useMyQuery1Query>;
-export type MyQuery1LazyQueryHookResult = ReturnType<typeof useMyQuery1LazyQuery>;
-export type MyQuery1QueryResult = Apollo.QueryResult<MyQuery1Query, MyQuery1QueryVariables>;
+export function useDetailQuery(options?: Omit<Urql.UseQueryArgs<DetailQueryVariables>, 'query'>) {
+  return Urql.useQuery<DetailQuery>({ query: DetailDocument, ...options });
+};

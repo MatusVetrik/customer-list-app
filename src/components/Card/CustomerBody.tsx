@@ -1,38 +1,20 @@
-import { gql, useQuery } from "urql";
-
 import { CardBody, Text, Box } from "grommet";
 
-import Fetching from "../../server/Fetching";
-import { Customer } from "../../generated/graphql";
+import { Customer, DetailQuery } from "../../generated/graphql";
+import Fetching from "../Fetching";
 
 interface CustomerBodyProps {
   customer: Customer;
+  data: DetailQuery | undefined;
+  fetching: boolean;
 }
 
-const CustomerBody = ({ customer }: CustomerBodyProps) => {
-  const query = gql`
-    query MyQuery($cusId: uuid!) {
-      order(order_by: {}, where: { customer_id: { _eq: $cusId } }) {
-        id
-        customer_id
-        cost
-        order_date
-        products_amount
-      }
-    }
-  `;
-
-  const [result] = useQuery({
-    query: query,
-    variables: {
-      cusId: customer.id,
-    },
-  });
-
-  const { data, fetching, error } = result;
-
-  if (fetching) return <Fetching height="13rem"></Fetching>;
-  if (error) return <p>Oh no... {error.message}</p>;
+const CustomerBody = ({ customer, data, fetching }: CustomerBodyProps) => {
+  const summary = (): number => {
+    return data?.order
+      .filter((order) => order.customer_id === customer.id)
+      .reduce((pre: any, cur) => pre + cur.cost, 0);
+  };
 
   return (
     <CardBody pad="medium" background="light-3" width="100%">
@@ -51,9 +33,11 @@ const CustomerBody = ({ customer }: CustomerBodyProps) => {
       </Box>
       <Text margin="5px">Id: {customer.id}</Text>
       <Text margin="5px">Birth: {customer.birth_date}</Text>
-      <Text margin="5px">
-        Summary: {data.order.reduce((pre: any, cur: any) => pre + cur.cost, 0)}€
-      </Text>
+      {fetching ? (
+        <Fetching height="2rem" size="small" />
+      ) : (
+        <Text margin="5px">Summary: {summary()}€</Text>
+      )}
     </CardBody>
   );
 };

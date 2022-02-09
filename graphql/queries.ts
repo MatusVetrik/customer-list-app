@@ -1,7 +1,7 @@
 import { gql } from "urql";
 
 export const customers = gql`
-  query MyQuery {
+  query customer {
     customer(distinct_on: id) {
       id
       birth_date
@@ -12,13 +12,19 @@ export const customers = gql`
 `;
 
 export const customerDetail = gql`
-  query MyQuery1($cusId: uuid!) {
-    order(order_by: {}, where: { customer_id: { _eq: $cusId } }) {
+  query detail {
+    order {
       id
       customer_id
       cost
       order_date
       products_amount
+    }
+    customer {
+      id
+      name
+      birth_date
+      vip
     }
   }
 `;

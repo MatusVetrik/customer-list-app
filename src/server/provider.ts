@@ -1,5 +1,4 @@
 import { Client, createClient } from "urql";
-import { gql, useQuery } from "urql";
 
 const client: Client = createClient({
   url: "https://upright-bedbug-84.hasura.app/v1/graphql",

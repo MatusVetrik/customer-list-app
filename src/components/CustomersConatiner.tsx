@@ -1,9 +1,9 @@
 import { Box } from "grommet";
 
-import CustomerContainer from "./Card/CustomerContainer";
 import Fetching from "./Fetching";
 import AppHeader from "./AppHeader";
 import { Customer, useCustomerQuery } from "../generated/graphql";
+import CustomerCard from "./Card/CustomerCard";
 
 const CustomersList = () => {
   const [{ data, fetching, error }] = useCustomerQuery();
@@ -22,7 +22,7 @@ const CustomersList = () => {
         pad={{ vertical: "medium", horizontal: "medium" }}
       >
         {data?.customer.map((customer: Customer, key: number) => (
-          <CustomerContainer key={key} index={key} customer={customer} />
+          <CustomerCard key={key} index={key} customer={customer} />
         ))}
       </Box>
     </>

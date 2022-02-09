@@ -10,7 +10,7 @@ interface CustomerCardProps {
   customer: Customer;
 }
 
-const CustomerContainer = ({ customer, index }: CustomerCardProps) => {
+const CustomerCard = ({ customer, index }: CustomerCardProps) => {
   const [{ data, fetching, error }] = useDetailQuery();
 
   if (error) return <p>Oh no... {error.message}</p>;
@@ -33,4 +33,4 @@ const CustomerContainer = ({ customer, index }: CustomerCardProps) => {
   );
 };
 
-export default CustomerContainer;
+export default CustomerCard;

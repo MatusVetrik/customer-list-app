@@ -1,7 +1,7 @@
 overwrite: true
-schema: "https://upright-bedbug-84.hasura.app/v1/graphql"
+schema: ${SCHEMA_PATH}
 headers:
-  x-hasura-admin-secret: "GvMdsg9CVSKmz6HFRftkxczqvU6W6Q1WYmcn4GhV6iyG4nFJF1JD57PFULBwLdz8"
+  x-hasura-admin-secret: ${ADMIN_SECRET}
 documents: "graphql/*.ts"
 generates:
   src/generated/graphql.tsx:

@@ -1,3 +1,4 @@
+import React from "react";
 import { CardBody, Text, Box } from "grommet";
 
 import { Customer, DetailQuery } from "../../generated/graphql";

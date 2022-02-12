@@ -1,3 +1,4 @@
+import React from "react";
 import { Box } from "grommet";
 
 import Fetching from "./Fetching";
@@ -5,7 +6,7 @@ import AppHeader from "./AppHeader";
 import { Customer, useCustomerQuery } from "../generated/graphql";
 import CustomerCard from "./Card/CustomerCard";
 
-const CustomersList = () => {
+const CustomersList: React.FC = () => {
   const [{ data, fetching, error }] = useCustomerQuery();
 
   if (fetching) return <Fetching height="100vh"></Fetching>;

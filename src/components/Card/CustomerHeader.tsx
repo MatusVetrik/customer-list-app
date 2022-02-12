@@ -1,3 +1,4 @@
+import React from "react";
 import { CardHeader, Avatar } from "grommet";
 
 import avatar01 from "./assets/avatar01.png";

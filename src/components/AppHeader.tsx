@@ -1,3 +1,4 @@
+import React from "react";
 import { Box, Paragraph, Clock } from "grommet";
 
 interface AppHeaderProps {
